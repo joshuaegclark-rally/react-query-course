@@ -1,7 +1,15 @@
 import { useParams } from "react-router-dom";
 
-export default function IssueDetails() {
+export default function IssueDetails(props) {
+  const { issue } = props;
   const { number } = useParams();
 
-  return <h1>Issue {number}</h1>;
+  return (
+    <div>
+      <h1>
+        Issue {number}
+      </h1>
+
+    </div>
+  );
 }
