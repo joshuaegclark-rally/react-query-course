@@ -2,6 +2,7 @@ import {GoComment, GoIssueClosed, GoIssueOpened} from 'react-icons/all';
 import {Link} from 'react-router-dom';
 import {relativeDate} from '../helpers/relativeDate';
 import useUserData from '../helpers/useUserData';
+import Label from './Label';
 
 export default function IssueListItem(props) {
   const {
@@ -30,9 +31,9 @@ export default function IssueListItem(props) {
             {title}
           </Link>
           {labels.map(label => (
-            <span key={label} className={`label red`}>
+            <Label key={label} label={label} className={`label red`}>
               {label}
-            </span>
+            </Label>
           ))}
         </span>
         <small>

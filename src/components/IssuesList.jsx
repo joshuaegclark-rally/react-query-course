@@ -4,24 +4,25 @@ import { GoIssueOpened, GoIssueClosed, GoComment, } from 'react-icons/all';
 import {relativeDate} from '../helpers/relativeDate';
 import IssueListItem from './IssueListItem';
 
-function fetchIssues() {
-  return fetch('/api/issues').then(res => res.json());
+function fetchIssues({ queryKey: [_, { labels }]}) {
+  const labelsString = labels.map((label) => `labels[]=${label}`).join('&')
+  return fetch(`/api/issues?${labelsString}`).then(res => res.json());
 }
 
-const useIssues = () => {
+const useIssues = (labels) => {
   /**
    * @param data {{ assignee: any, comments: Array<string>, completedDate: any, createdBy: string, createdDate: string, dueDate: string, id: string, labels: Array<string>, number: number, status: string, title: string }}
    */
   const { data, isLoading, isError, error } = useQuery(
-    ['issues'],
+    ['issues', { labels }],
     fetchIssues,
   );
 
   return { data, isLoading, isError, error };
 };
 
-export default function IssuesList(props) {
-  const issuesQuery = useIssues();
+export default function IssuesList({ labels }) {
+  const issuesQuery = useIssues(labels);
 
   return (
     <div>
